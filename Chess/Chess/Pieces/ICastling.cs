@@ -2,6 +2,5 @@
 {
     internal interface ICastling
     {
-        void MoveCastle();
     }
 }

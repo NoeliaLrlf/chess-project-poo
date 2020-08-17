@@ -1,12 +1,12 @@
-﻿using System;
-
-namespace Chess
+﻿namespace Chess
 {
     internal class Program
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ChessGame chessGame = new ChessGame();
+            // Console.Clear();
+            PrintBoard.Display(chessGame);
         }
     }
 }

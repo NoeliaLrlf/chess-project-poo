@@ -1,27 +1,19 @@
-﻿using System;
-
-namespace Chess.Pieces
+﻿namespace Chess.Pieces
 {
-    public class Queen : Piece
+    internal class Queen : Piece
     {
-        protected override bool CanMove()
+        public Queen(Board brd, Color color) : base(color, brd)
         {
-            throw new NotImplementedException();
         }
 
-        protected override void GetLocation()
+        public override bool[,] PossibleMovements()
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
-        protected override void Move()
+        public override string ToString()
         {
-            throw new NotImplementedException();
-        }
-
-        protected override void SetLocation()
-        {
-            throw new NotImplementedException();
+            return "Q";
         }
     }
 }

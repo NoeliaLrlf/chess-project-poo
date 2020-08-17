@@ -1,8 +1,8 @@
 ﻿namespace Chess.Pieces
 {
-    internal class Horse : Piece
+    internal class Bishop : Piece
     {
-        public Horse(Board brd, Color color) : base(color, brd)
+        public Bishop(Board board, Color color) : base(color, board)
         {
         }
 
@@ -13,7 +13,7 @@
 
         public override string ToString()
         {
-            return "N";
+            return "B";
         }
     }
 }

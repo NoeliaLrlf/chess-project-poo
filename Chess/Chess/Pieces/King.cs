@@ -1,27 +1,22 @@
-﻿using System;
-
-namespace Chess.Pieces
+﻿namespace Chess.Pieces
 {
-    public class King : Piece, ICheck
+    internal class King : Piece
     {
-        protected override bool CanMove()
+        private ChessGame chessGame;
+
+        public King(Board brd, Color color, ChessGame match) : base(color, brd)
         {
-            throw new NotImplementedException();
+            chessGame = match;
         }
 
-        protected override void GetLocation()
+        public override bool[,] PossibleMovements()
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
-        protected override void Move()
+        public override string ToString()
         {
-            throw new NotImplementedException();
-        }
-
-        protected override void SetLocation()
-        {
-            throw new NotImplementedException();
+            return "K";
         }
     }
 }
