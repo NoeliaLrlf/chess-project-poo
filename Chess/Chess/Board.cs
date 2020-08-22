@@ -30,5 +30,11 @@ namespace Chess
             Pieces[pos.Row, pos.Column] = p;
             p.Position = pos;
         }
+
+        public bool IsTherePiece(Position pos)
+        {
+           // ValidatePosition(pos);
+            return Piece(pos) != null;
+        }
     }
 }

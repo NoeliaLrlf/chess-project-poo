@@ -11,9 +11,14 @@
             Column = column;
         }
 
-        public override string ToString()
+        public override string ToString() => Row + ", " + Column;
+        
+
+        public void SetValues(int row, int column)
         {
-            return Row + ", " + Column;
+            Row = row;
+            Column = column;
         }
+
     }
 }
