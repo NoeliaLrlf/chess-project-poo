@@ -29,6 +29,26 @@ namespace Chess
             Pieces.Add(piece);
         }
 
+
+        //public bool IsItChecked(Color color)
+        //{
+        //    Piece k = King(color);
+        //    if (k == null)
+        //    {
+        //        throw new BoardException("There is no " + color + "King on the board!");
+        //    }
+
+        //    foreach (Piece p in InGamePieces(Opponent(color)))
+        //    {
+        //        bool[,] mat = p.PossibleMovements();
+        //        if (mat[k.Position.Row, k.Position.Column])
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
+
         public void MountBoard()
         {
             PutNewPiece('a', 1, new Rook(BoardGame, Color.White));
