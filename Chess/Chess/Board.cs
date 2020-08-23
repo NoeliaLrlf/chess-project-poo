@@ -31,10 +31,37 @@ namespace Chess
             p.Position = pos;
         }
 
+        public bool IsValidPosition(Position pos)
+        {
+            if (pos.Row < 0 || pos.Row >= Rows || pos.Column < 0 || pos.Column >= Columns)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        public Piece RemovePiece(Position pos)
+        {
+            if (Piece(pos) == null)
+            {
+                return null;
+            }
+            Piece aux = Piece(pos);
+            aux.Position = null;
+            Pieces[pos.Row, pos.Column] = null;
+            return aux;
+        }
         public bool IsTherePiece(Position pos)
         {
-           // ValidatePosition(pos);
+            ValidatePosition(pos);
             return Piece(pos) != null;
+        }
+        public void ValidatePosition(Position pos)
+        {
+            if (!IsValidPosition(pos))
+            {
+                throw new BoardException("Invalid position!");
+            }
         }
     }
 }
