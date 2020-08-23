@@ -9,6 +9,8 @@ namespace Chess
 
         public Color ColorGame { get; private set; }
 
+        public bool Check { get; private set; }
+
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
 
@@ -29,25 +31,59 @@ namespace Chess
             Pieces.Add(piece);
         }
 
+        public HashSet<Piece> InGamePieces(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece x in Pieces)
+            {
+                if (x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+          //  aux.ExceptWith(CapturedPieces(color));
+            return aux;
+        }
 
-        //public bool IsItChecked(Color color)
-        //{
-        //    Piece k = King(color);
-        //    if (k == null)
-        //    {
-        //        throw new BoardException("There is no " + color + "King on the board!");
-        //    }
+        private Color Opponent(Color color)
+        {
+            if (color == Color.White)
+            {
+                return Color.Black;
+            }
+            return Color.White;
+        }
 
-        //    foreach (Piece p in InGamePieces(Opponent(color)))
-        //    {
-        //        bool[,] mat = p.PossibleMovements();
-        //        if (mat[k.Position.Row, k.Position.Column])
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
+        private Piece King(Color color)
+        {
+            foreach (Piece p in InGamePieces(color))
+            {
+                if (p is King)
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        public bool IsItChecked(Color color)
+        {
+            Piece k = King(color);
+            if (k == null)
+            {
+                throw new BoardException("There is no " + color + "King on the board!");
+            }
+
+            foreach (Piece p in InGamePieces(Opponent(color)))
+            {
+                bool[,] mat = p.PossibleMovements();
+                if (mat[k.Position.Row, k.Position.Column])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public void MountBoard()
         {
