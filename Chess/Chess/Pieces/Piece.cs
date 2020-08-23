@@ -16,5 +16,36 @@
         }
 
         public abstract bool[,] PossibleMovements();
+
+        public void IncreaseMovementsQty()
+        {
+            MovementsQty++;
+        }
+
+        public void DecreaseMovementsQty()
+        {
+            MovementsQty--;
+        }
+
+        public bool IsTherePossibleMovements()
+        {
+            bool[,] mat = PossibleMovements();
+            for (int i = 0; i < Board.Rows; i++)
+            {
+                for (int j = 0; j < Board.Columns; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool PossibleMovement(Position pos)
+        {
+            return PossibleMovements()[pos.Row, pos.Column];
+        }
     }
 }
