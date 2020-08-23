@@ -6,11 +6,13 @@ namespace Chess
     internal class ChessGame
     {
         public Board BoardGame { get; private set; }
-
         public Color ColorGamePlayer { get; private set; }
-
+        public int Turn { get; private set; }
         public bool Check { get; private set; }
         public Piece VulnerableEnPassant { get; private set; }
+        public Color CurrentPlayer { get; private set; }
+        public bool Finished { get; private set; }
+        public bool Quit { get; set; }
 
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
@@ -25,7 +27,115 @@ namespace Chess
             Captured = new HashSet<Piece>();
             MountBoard();
         }
+        public void MakeThePlay(Position origin, Position destination)
+        {
+            Piece CapturedPiece = RunMovement(origin, destination);
 
+            if (IsItChecked(CurrentPlayer))
+            {
+                UndoMovement(origin, destination, CapturedPiece);
+                throw new BoardException("You Can't put yourself in check!");
+            }
+
+            Piece p = BoardGame.Piece(destination);
+
+            //#Special Play: Promotion
+            if (p is Pawn)
+            {
+                if (p.Color == Color.White && destination.Row == 0 || p.Color == Color.Black && destination.Row == 7)
+                {
+                    p = BoardGame.RemovePiece(destination);
+                    Pieces.Remove(p);
+                    Piece queen = new Queen(BoardGame, p.Color);
+                    BoardGame.PutPiece(queen, destination);
+                    Pieces.Add(queen);
+                }
+            }
+
+
+            if (IsItChecked(Opponent(CurrentPlayer)))
+            {
+                Check = true;
+            }
+            else
+            {
+                Check = false;
+            }
+
+            if (CheckmateTest(Opponent(CurrentPlayer)))
+            {
+                Finished = true;
+            }
+            else
+            {
+                Turn++;
+                ChangePlayer();
+            }
+
+            //#Special Play: En Passant
+            if (p is Pawn && destination.Row == origin.Row - 2 || destination.Row == origin.Row + 2)
+            {
+                VulnerableEnPassant = p;
+            }
+            else
+            {
+                VulnerableEnPassant = null;
+            }
+
+        }
+        public bool CheckmateTest(Color color)
+        {
+            if (!IsItChecked(color))
+            {
+                return false;
+            }
+            foreach (Piece p in InGamePieces(color))
+            {
+                bool[,] mat = p.PossibleMovements();
+                for (int i = 0; i < BoardGame.Rows; i++)
+                {
+                    for (int j = 0; j < BoardGame.Columns; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Position origin = p.Position;
+                            Position destination = new Position(i, j);
+                            Piece capturedPiece = RunMovement(origin, destination);
+                            bool checkTest = IsItChecked(color);
+                            UndoMovement(origin, destination, capturedPiece);
+                            if (!checkTest)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        public HashSet<Piece> CapturedPieces(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece x in Captured)
+            {
+                if (x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+            return aux;
+        }
+        private void ChangePlayer()
+        {
+            if (CurrentPlayer == Color.White)
+            {
+                CurrentPlayer = Color.Black;
+            }
+            else
+            {
+                CurrentPlayer = Color.White;
+            }
+        }
         public Piece RunMovement(Position origin, Position destination)
         {
             Piece P = BoardGame.RemovePiece(origin);
@@ -86,7 +196,6 @@ namespace Chess
 
             return CapturedPiece;
         }
-
         public void UndoMovement(Position origin, Position destination, Piece capturedPiece)
         {
             Piece P = BoardGame.RemovePiece(destination);
@@ -145,13 +254,11 @@ namespace Chess
             }
 
         }
-
         public void PutNewPiece(char column, int row, Piece piece)
         {
             BoardGame.PutPiece(piece, new ChessPosition(column, row).ToPosition());
             Pieces.Add(piece);
         }
-
         public HashSet<Piece> InGamePieces(Color color)
         {
             HashSet<Piece> aux = new HashSet<Piece>();
@@ -165,7 +272,6 @@ namespace Chess
           //  aux.ExceptWith(CapturedPieces(color));
             return aux;
         }
-
         private Color Opponent(Color color)
         {
             if (color == Color.White)
@@ -174,8 +280,6 @@ namespace Chess
             }
             return Color.White;
         }
-
-
         public bool IsItChecked(Color color)
         {
             Piece k = King(color);
@@ -224,8 +328,6 @@ namespace Chess
             }
             return null;
         }
-
-
         public void ValidadeDestinationPosition(Position origin, Position destination)
         {
             if (!BoardGame.Piece(origin).PossibleMovement(destination))
