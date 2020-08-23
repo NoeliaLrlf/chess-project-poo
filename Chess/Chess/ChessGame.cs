@@ -316,7 +316,6 @@ namespace Chess
             }
 
         }
-
         private Piece King(Color color)
         {
             foreach (Piece p in InGamePieces(color))

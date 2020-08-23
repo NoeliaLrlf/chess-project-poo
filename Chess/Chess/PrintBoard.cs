@@ -80,8 +80,9 @@ namespace Chess
             }
         }
 
-        public static ChessPosition ReadChessPosition(string s)
+        public static ChessPosition ReadChessPosition()
         {
+            string s = Console.ReadLine();
 
             if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
             {
@@ -101,8 +102,6 @@ namespace Chess
 
             char column = s[0];
             bool correctC = char.IsLetter(column);
-
-            //int row = int.Parse(s[1] + "");
             bool correctR = int.TryParse(s[1] + "", out int row);
 
             if (s.Length == 2 && !correctC || s.Length == 2 && !correctR)
