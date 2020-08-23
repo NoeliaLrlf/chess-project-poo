@@ -49,5 +49,48 @@ namespace Chess
                 Console.Write(" ");
             }
         }
+
+        public static void PrintCapturedPieces(ChessGame match)
+        {
+            //Console.WriteLine("Captured Pieces:");
+            //Console.Write("White: ");
+            //PrintHashset(match.CapturedPieces(Color.White));
+            //Console.WriteLine("");
+            //Console.Write("Black: ");
+            //ConsoleColor aux = Console.ForegroundColor;
+            //Console.ForegroundColor = ConsoleColor.Yellow;
+            //PrintHashset(match.CapturedPieces(Color.Black));
+            //Console.ForegroundColor = aux;
+            //Console.WriteLine("");
+
+        }
+
+        //public static void PrintBoard(Board brd, bool[,] possiblePositions)
+        //{
+        //    ConsoleColor OriginalBackground = Console.BackgroundColor;
+        //    ConsoleColor ChangedBackground = ConsoleColor.DarkGray;
+
+        //    for (int i = 0; i < brd.Columns; i++)
+        //    {
+        //        Console.Write(8 - i + " ");
+        //        for (int j = 0; j < brd.Rows; j++)
+        //        {
+        //            if (possiblePositions[i, j])
+        //            {
+        //                Console.BackgroundColor = ChangedBackground;
+        //            }
+        //            else
+        //            {
+        //                Console.BackgroundColor = OriginalBackground;
+        //            }
+        //            PrintPiece(brd.Piece(i, j));
+        //            Console.BackgroundColor = OriginalBackground;
+        //        }
+
+        //        Console.WriteLine();
+        //    }
+        //    Console.WriteLine("  a b c d e f g h");
+        //    Console.BackgroundColor = OriginalBackground;
+        //}
     }
 }
