@@ -1,6 +1,6 @@
 ﻿namespace Chess.Pieces
 {
-    internal class King : Piece
+    internal class King : Piece, ICastling
     {
         private ChessGame chessGame;
 
@@ -83,36 +83,40 @@
             }
 
             //#Special Castling
-            if (MovementsQty == 0 && !chessGame.Check)
-            {
-                //Castling
-                Position posR1 = new Position(Position.Row, Position.Column + 3);
-                if (CastlingTest(posR1))
+            Castling(mat);
+            
+            return mat;
+        }
+         public void Castling(bool[,] mat)
+        {
+                if (MovementsQty == 0 && !chessGame.Check)
                 {
-                    Position p1 = new Position(Position.Row, Position.Column + 1);
-                    Position p2 = new Position(Position.Row, Position.Column + 2);
-                    if (Board.Piece(p1) == null && Board.Piece(p2) == null)
+                    //Castling
+                    Position posR1 = new Position(Position.Row, Position.Column + 3);
+                    if (CastlingTest(posR1))
                     {
-                        mat[Position.Row, Position.Column + 2] = true;
+                        Position p1 = new Position(Position.Row, Position.Column + 1);
+                        Position p2 = new Position(Position.Row, Position.Column + 2);
+                        if (Board.Piece(p1) == null && Board.Piece(p2) == null)
+                        {
+                            mat[Position.Row, Position.Column + 2] = true;
+                        }
                     }
-                }
 
-                //Castling
-                Position posR2 = new Position(Position.Row, Position.Column - 4);
-                if (CastlingTest(posR2))
-                {
-                    Position p1 = new Position(Position.Row, Position.Column - 1);
-                    Position p2 = new Position(Position.Row, Position.Column - 2);
-                    Position p3 = new Position(Position.Row, Position.Column - 3);
-                    if (Board.Piece(p1) == null && Board.Piece(p2) == null && Board.Piece(p3) == null)
+                    //Castling
+                    Position posR2 = new Position(Position.Row, Position.Column - 4);
+                    if (CastlingTest(posR2))
                     {
-                        mat[Position.Row, Position.Column - 2] = true;
+                        Position p1 = new Position(Position.Row, Position.Column - 1);
+                        Position p2 = new Position(Position.Row, Position.Column - 2);
+                        Position p3 = new Position(Position.Row, Position.Column - 3);
+                        if (Board.Piece(p1) == null && Board.Piece(p2) == null && Board.Piece(p3) == null)
+                        {
+                            mat[Position.Row, Position.Column - 2] = true;
+                        }
                     }
                 }
             }
-            return mat;
-        }
-
         public override string ToString()
         {
             return "K";

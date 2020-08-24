@@ -62,16 +62,16 @@
                 if (Position.Row == 3)
                 {
                     Position left = new Position(Position.Row, Position.Column - 1);
-                    //if (Board.IsValidPosition(left) && IsThereEnemy(left) && Board.Piece(left) == Match.VulnerableEnPassant)
-                    //{
-                    //    mat[left.Row - 1, left.Column] = true;
-                    //}
+                    if (Board.IsValidPosition(left) && IsThereEnemy(left) && Board.Piece(left) == Match.VulnerableEnPassant)
+                    {
+                        mat[left.Row - 1, left.Column] = true;
+                    }
 
-                    //Position right = new Position(Position.Row, Position.Column + 1);
-                    //if (Board.IsValidPosition(right) && IsThereEnemy(right) && Board.Piece(right) == Match.VulnerableEnPassant)
-                    //{
-                    //    mat[right.Row - 1, right.Column] = true;
-                    //}
+                    Position right = new Position(Position.Row, Position.Column + 1);
+                    if (Board.IsValidPosition(right) && IsThereEnemy(right) && Board.Piece(right) == Match.VulnerableEnPassant)
+                    {
+                        mat[right.Row - 1, right.Column] = true;
+                    }
                 }
 
             }
@@ -107,16 +107,16 @@
                 if (Position.Row == 4)
                 {
                     Position left = new Position(Position.Row, Position.Column - 1);
-                    //if (Board.IsValidPosition(left) && IsThereEnemy(left) && Board.Piece(left) == Match.VulnerableEnPassant)
-                    //{
-                    //    mat[left.Row + 1, left.Column] = true;
-                    //}
+                    if (Board.IsValidPosition(left) && IsThereEnemy(left) && Board.Piece(left) == Match.VulnerableEnPassant)
+                    {
+                        mat[left.Row + 1, left.Column] = true;
+                    }
 
-                    //Position right = new Position(Position.Row, Position.Column + 1);
-                    //if (Board.IsValidPosition(right) && IsThereEnemy(right) && Board.Piece(right) == Match.VulnerableEnPassant)
-                    //{
-                    //    mat[right.Row + 1, right.Column] = true;
-                    //}
+                    Position right = new Position(Position.Row, Position.Column + 1);
+                    if (Board.IsValidPosition(right) && IsThereEnemy(right) && Board.Piece(right) == Match.VulnerableEnPassant)
+                    {
+                        mat[right.Row + 1, right.Column] = true;
+                    }
                 }
             }
 

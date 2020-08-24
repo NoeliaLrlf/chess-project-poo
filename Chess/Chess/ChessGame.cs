@@ -10,7 +10,6 @@ namespace Chess
         public int Turn { get; private set; }
         public bool Check { get; private set; }
         public Piece VulnerableEnPassant { get; private set; }
-        public Color CurrentPlayer { get; private set; }
         public bool Finished { get; private set; }
         public bool Quit { get; set; }
 
@@ -20,8 +19,11 @@ namespace Chess
         public ChessGame()
         {
             BoardGame = new Board(8, 8);
-
+            Turn = 1;
             ColorGamePlayer = Color.White;
+            Finished = false;
+            Quit = false;
+            Check = false;
             VulnerableEnPassant = null;
             Pieces = new HashSet<Piece>();
             Captured = new HashSet<Piece>();
@@ -31,7 +33,7 @@ namespace Chess
         {
             Piece CapturedPiece = RunMovement(origin, destination);
 
-            if (IsItChecked(CurrentPlayer))
+            if (IsItChecked(ColorGamePlayer))
             {
                 UndoMovement(origin, destination, CapturedPiece);
                 throw new BoardException("You Can't put yourself in check!");
@@ -53,7 +55,7 @@ namespace Chess
             }
 
 
-            if (IsItChecked(Opponent(CurrentPlayer)))
+            if (IsItChecked(Opponent(ColorGamePlayer)))
             {
                 Check = true;
             }
@@ -62,7 +64,7 @@ namespace Chess
                 Check = false;
             }
 
-            if (CheckmateTest(Opponent(CurrentPlayer)))
+            if (CheckmateTest(Opponent(ColorGamePlayer)))
             {
                 Finished = true;
             }
@@ -127,13 +129,13 @@ namespace Chess
         }
         private void ChangePlayer()
         {
-            if (CurrentPlayer == Color.White)
+            if (ColorGamePlayer == Color.White)
             {
-                CurrentPlayer = Color.Black;
+                ColorGamePlayer = Color.Blue;
             }
             else
             {
-                CurrentPlayer = Color.White;
+                ColorGamePlayer = Color.White;
             }
         }
         public Piece RunMovement(Position origin, Position destination)
@@ -269,14 +271,14 @@ namespace Chess
                     aux.Add(x);
                 }
             }
-          //  aux.ExceptWith(CapturedPieces(color));
+           aux.ExceptWith(CapturedPieces(color));
             return aux;
         }
         private Color Opponent(Color color)
         {
             if (color == Color.White)
             {
-                return Color.Black;
+                return Color.Blue;
             }
             return Color.White;
         }
@@ -353,22 +355,22 @@ namespace Chess
             PutNewPiece('g', 2, new Pawn(BoardGame, Color.White, this));
             PutNewPiece('h', 2, new Pawn(BoardGame, Color.White, this));
 
-            PutNewPiece('a', 8, new Rook(BoardGame, Color.Black));
-            PutNewPiece('b', 8, new Horse(BoardGame, Color.Black));
-            PutNewPiece('c', 8, new Bishop(BoardGame, Color.Black));
-            PutNewPiece('d', 8, new Queen(BoardGame, Color.Black));
-            PutNewPiece('e', 8, new King(BoardGame, Color.Black, this));
-            PutNewPiece('f', 8, new Bishop(BoardGame, Color.Black));
-            PutNewPiece('g', 8, new Horse(BoardGame, Color.Black));
-            PutNewPiece('h', 8, new Rook(BoardGame, Color.Black));
-            PutNewPiece('a', 7, new Pawn(BoardGame, Color.Black, this));
-            PutNewPiece('b', 7, new Pawn(BoardGame, Color.Black, this));
-            PutNewPiece('c', 7, new Pawn(BoardGame, Color.Black, this));
-            PutNewPiece('d', 7, new Pawn(BoardGame, Color.Black, this));
-            PutNewPiece('e', 7, new Pawn(BoardGame, Color.Black, this));
-            PutNewPiece('f', 7, new Pawn(BoardGame, Color.Black, this));
-            PutNewPiece('g', 7, new Pawn(BoardGame, Color.Black, this));
-            PutNewPiece('h', 7, new Pawn(BoardGame, Color.Black, this));
+            PutNewPiece('a', 8, new Rook(BoardGame, Color.Blue));
+            PutNewPiece('b', 8, new Horse(BoardGame, Color.Blue));
+            PutNewPiece('c', 8, new Bishop(BoardGame, Color.Blue));
+            PutNewPiece('d', 8, new Queen(BoardGame, Color.Blue));
+            PutNewPiece('e', 8, new King(BoardGame, Color.Blue, this));
+            PutNewPiece('f', 8, new Bishop(BoardGame, Color.Blue));
+            PutNewPiece('g', 8, new Horse(BoardGame, Color.Blue));
+            PutNewPiece('h', 8, new Rook(BoardGame, Color.Blue));
+            PutNewPiece('a', 7, new Pawn(BoardGame, Color.Blue, this));
+            PutNewPiece('b', 7, new Pawn(BoardGame, Color.Blue, this));
+            PutNewPiece('c', 7, new Pawn(BoardGame, Color.Blue, this));
+            PutNewPiece('d', 7, new Pawn(BoardGame, Color.Blue, this));
+            PutNewPiece('e', 7, new Pawn(BoardGame, Color.Blue, this));
+            PutNewPiece('f', 7, new Pawn(BoardGame, Color.Blue, this));
+            PutNewPiece('g', 7, new Pawn(BoardGame, Color.Blue, this));
+            PutNewPiece('h', 7, new Pawn(BoardGame, Color.Blue, this));
         }
     }
 }

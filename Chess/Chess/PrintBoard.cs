@@ -9,6 +9,32 @@ namespace Chess
         public static void Display(ChessGame chessGame)
         {
             Print(chessGame.BoardGame);
+            Console.WriteLine("");
+            PrintCapturedPieces(chessGame);
+            Console.WriteLine("");
+            Console.WriteLine("Turn: " + chessGame.Turn);
+
+            if (!chessGame.Finished)
+            {
+                if (chessGame.Quit)
+                {
+                    Console.WriteLine("Thanks for playing Console Chess!");
+                }
+                else
+                {
+                    Console.WriteLine("Waiting play: " + chessGame.ColorGamePlayer);
+                    if (chessGame.Check)
+                    {
+                        Console.WriteLine("CHECK!");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("CHECKMATE!");
+                Console.WriteLine("Winner: " + chessGame.ColorGamePlayer);
+            }
+
         }
 
         public static void Print(Board brd)
@@ -119,10 +145,10 @@ namespace Chess
             Console.Write("White: ");
             PrintHashset(match.CapturedPieces(Color.White));
             Console.WriteLine("");
-            Console.Write("Black: ");
+            Console.Write("Blue: ");
             ConsoleColor aux = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            PrintHashset(match.CapturedPieces(Color.Black));
+            Console.ForegroundColor = ConsoleColor.Blue;
+            PrintHashset(match.CapturedPieces(Color.Blue));
             Console.ForegroundColor = aux;
             Console.WriteLine("");
 

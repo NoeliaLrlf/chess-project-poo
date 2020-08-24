@@ -1,6 +1,7 @@
 ﻿namespace Chess.Pieces
 {
-    internal interface ICastling
+    public interface ICastling
     {
+        public void Castling(bool[,] mat);
     }
 }
