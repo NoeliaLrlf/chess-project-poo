@@ -18,7 +18,7 @@
         private bool CastlingTest(Position pos)
         {
             Piece p = Board.Piece(pos);
-            return p != null && p is Rook && p.Color == Color && p.MovementsQty == 0;
+            return p != null && p is Rook && p.Color == Color && p.MovementsY == 0;
         }
 
         public override bool[,] PossibleMovements()
@@ -89,7 +89,7 @@
         }
          public void Castling(bool[,] mat)
         {
-                if (MovementsQty == 0 && !chessGame.Check)
+                if (MovementsY == 0 && !chessGame.Check)
                 {
                     //Castling
                     Position posR1 = new Position(Position.Row, Position.Column + 3);

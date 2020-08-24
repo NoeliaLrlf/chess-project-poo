@@ -42,7 +42,7 @@
 
                 pos.SetValues(Position.Row - 2, Position.Column);
                 Position p2 = new Position(Position.Row - 1, Position.Column);
-                if (Board.IsValidPosition(p2) && Free(p2) && Board.IsValidPosition(pos) && Free(pos) && MovementsQty == 0)
+                if (Board.IsValidPosition(p2) && Free(p2) && Board.IsValidPosition(pos) && Free(pos) && MovementsY == 0)
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
@@ -86,7 +86,7 @@
 
                 pos.SetValues(Position.Row + 2, Position.Column);
                 Position p2 = new Position(Position.Row + 1, Position.Column);
-                if (Board.IsValidPosition(p2) && Free(p2) && Board.IsValidPosition(pos) && Free(pos) && MovementsQty == 0)
+                if (Board.IsValidPosition(p2) && Free(p2) && Board.IsValidPosition(pos) && Free(pos) && MovementsY == 0)
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
