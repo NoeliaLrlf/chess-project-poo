@@ -39,6 +39,9 @@ namespace Chess
 
         public static void Print(Board brd)
         {
+            Console.WriteLine("Welcome to the Game");
+            Console.WriteLine("===================================");
+
             Console.WriteLine("     a    b    c    d    e    f    g    h");
             for (int i = 0; i < brd.Columns; i++)
             {
@@ -57,6 +60,9 @@ namespace Chess
         {
             ConsoleColor OriginalBackground = Console.BackgroundColor;
             ConsoleColor ChangedBackground = ConsoleColor.DarkGray;
+            Console.WriteLine("Welcome to the Game");
+            Console.WriteLine("===================================");
+
             Console.WriteLine("     a    b    c    d    e    f    g    h");
             for (int i = 0; i < brd.Columns; i++)
             {
@@ -106,9 +112,9 @@ namespace Chess
             }
         }
 
-        public static ChessPosition ReadChessPosition()
+        public static ChessPosition ReadChessPosition(string s, ChessGame chessGame)
         {
-            string s = Console.ReadLine();
+            
 
             if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
             {
@@ -119,6 +125,12 @@ namespace Chess
             {
 
                 throw new ApplicationException("Thanks for playing Console Chess!");
+            }
+
+            if (s == "r")
+            {
+                chessGame.StartGame();
+                throw new BoardException("You pressed the reset the game");
             }
 
             if (s.Length != 2)

@@ -14,7 +14,6 @@ namespace Chess
             Columns = columns;
             Pieces = new Piece[rows, columns];
         }
-
         public Piece Piece(int row, int column)
         {
             return Pieces[row, column];
@@ -30,6 +29,7 @@ namespace Chess
             Pieces[pos.Row, pos.Column] = p;
             p.Position = pos;
         }
+
 
         public bool IsValidPosition(Position pos)
         {

@@ -18,6 +18,11 @@ namespace Chess
 
         public ChessGame()
         {
+            
+        }
+
+        public void StartGame()
+        {
             BoardGame = new Board(8, 8);
             Turn = 1;
             ColorGamePlayer = Color.White;

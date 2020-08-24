@@ -1,13 +1,65 @@
 ﻿using System;
 namespace Chess
 {
+
     internal class Program
     {
+        private static string Action { get; set; } = "Start Game";
         private static void Main(string[] args)
+        {
+            ProgramGame();
+        }
+        private static void Menu()
+        {
+            Console.WriteLine("Welcome to the Game Press a number");
+            Console.WriteLine("===================================");
+            Console.WriteLine($"1. {Action}");
+            Console.WriteLine("2. exit");
+
+        }
+
+        private static int ReadInt()
+        {
+            int result;
+            while (!int.TryParse(Console.ReadLine(), out result))
+            {
+                Console.WriteLine("Wrong input! Enter number again:");
+            }
+            return result;
+        }
+        public static void ProgramGame()
+        {
+
+            bool exit = false;
+            while (!exit)
+            {
+                Menu();
+
+                int option = ReadInt();
+
+                switch (option)
+                {
+                    case 1:
+                        StartGame();
+                        break;
+                    case 2:
+                        exit = true;
+                        break;
+
+                    default:
+                        Console.WriteLine("Choices again the option:");
+                        break;
+                }
+
+            }
+
+        }
+        public static void StartGame()
         {
             try
             {
                 ChessGame chessGame = new ChessGame();
+                chessGame.StartGame();
 
                 while (!chessGame.Finished)
                 {
@@ -17,9 +69,18 @@ namespace Chess
                         PrintBoard.Display(chessGame);
 
                         Console.WriteLine("");
-                        Console.WriteLine("Write an Origin or press q to quit.");
+                        Console.WriteLine($"Write an Origin or press:" +
+                            $"---> m to Menu.");
                         Console.Write("Origin: ");
-                        Position origin = PrintBoard.ReadChessPosition().ToPosition();
+                        string s = Console.ReadLine();
+
+                        if (s == "m")
+                        {
+                            Action = "Reset Game";
+                            break;
+                        }
+
+                        Position origin = PrintBoard.ReadChessPosition(s, chessGame).ToPosition();
                         chessGame.ValidateOriginPosition(origin);
 
                         bool[,] possiblePositions = chessGame.BoardGame.Piece(origin).PossibleMovements();
@@ -28,10 +89,18 @@ namespace Chess
 
                         Console.WriteLine("");
                         Console.Write("Destination: ");
-                        Position destination = PrintBoard.ReadChessPosition().ToPosition();
+                        s = Console.ReadLine();
+
+                        if (s == "m")
+                        {
+                            Action = "Reset Game";
+                            break;
+                        }
+                        Position destination = PrintBoard.ReadChessPosition(s, chessGame).ToPosition();
                         chessGame.ValidadeDestinationPosition(origin, destination);
 
                         chessGame.MakeThePlay(origin, destination);
+
                     }
 
                     catch (BoardException e)
@@ -59,4 +128,5 @@ namespace Chess
             }
         }
     }
+
 }
