@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chess.Pieces;
+using System;
 namespace Chess
 {
 
@@ -15,6 +16,62 @@ namespace Chess
             Console.WriteLine("===================================");
             Console.WriteLine($"1. {Action}");
             Console.WriteLine("2. exit");
+
+        }
+
+        private static (Player, Player) menuPlayer() {
+           
+            Console.WriteLine(" Player 1");
+            Console.WriteLine("==========");
+            Console.WriteLine("Enter Name for the Player 1 ");
+            string name = Console.ReadLine();
+            Console.WriteLine("Choose the colur for the player1 ");
+            Console.WriteLine("1. Blue");
+            Console.WriteLine("2. White");
+            int option = ReadInt();
+            Color color =Color.Black;
+            switch (option)
+            {
+                case 1:
+                    color =Color.Blue;
+                    break;
+                case 2:
+                    color = Color.White;
+                    break;
+
+                default:
+                    Console.WriteLine("Choices again the option:");
+                    break;
+            }
+            Player player1 = new Player(name, color);
+
+            Console.WriteLine(" Player 2");
+            Console.WriteLine("==========");
+            Console.WriteLine("Enter Name for the Player 2 ");
+            string name2 = Console.ReadLine();
+            Console.WriteLine("Choose the colur for the player2");
+            Console.WriteLine("1. Blue");
+            Console.WriteLine("2. White");
+            int option2 = ReadInt();
+            Color color2 = Color.Black;
+            switch (option2)
+            {
+                case 1:
+                    color2 = Color.Blue;
+                    break;
+                case 2:
+                    color2 = Color.White;
+                    break;
+
+                default:
+                    Console.WriteLine("Choices again the option:");
+                    break;
+            }
+            Player player2 = new Player(name2, color2);
+
+            return (player1, player2);
+
+
 
         }
 
@@ -58,8 +115,9 @@ namespace Chess
         {
             try
             {
+                 (Player,Player) players= menuPlayer();
                 ChessGame chessGame = new ChessGame();
-                chessGame.StartGame();
+                chessGame.StartGame(players.Item1,players.Item2) ;
 
                 while (!chessGame.Finished)
                 {
@@ -80,7 +138,7 @@ namespace Chess
                             break;
                         }
 
-                        Position origin = PrintBoard.ReadChessPosition(s, chessGame).ToPosition();
+                        Position origin = PrintBoard.ReadChessPosition(s, chessGame, players).ToPosition();
                         chessGame.ValidateOriginPosition(origin);
 
                         bool[,] possiblePositions = chessGame.BoardGame.Piece(origin).PossibleMovements();
@@ -96,7 +154,7 @@ namespace Chess
                             Action = "Reset Game";
                             break;
                         }
-                        Position destination = PrintBoard.ReadChessPosition(s, chessGame).ToPosition();
+                        Position destination = PrintBoard.ReadChessPosition(s, chessGame, players).ToPosition();
                         chessGame.ValidadeDestinationPosition(origin, destination);
 
                         chessGame.MakeThePlay(origin, destination);

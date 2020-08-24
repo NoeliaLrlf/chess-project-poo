@@ -22,7 +22,11 @@ namespace Chess
                 }
                 else
                 {
-                    Console.WriteLine("Waiting play: " + chessGame.ColorGamePlayer);
+                    if (chessGame.ColorGamePlayer.Equals(chessGame.player1.ColorPleyer))
+                        Console.WriteLine("Waiting play: " + chessGame.player1.NamePlayer);
+                    else 
+                        Console.WriteLine("Waiting play: " + chessGame.player2.NamePlayer);
+
                     if (chessGame.Check)
                     {
                         Console.WriteLine("CHECK!");
@@ -112,7 +116,7 @@ namespace Chess
             }
         }
 
-        public static ChessPosition ReadChessPosition(string s, ChessGame chessGame)
+        public static ChessPosition ReadChessPosition(string s, ChessGame chessGame, (Player,Player) players)
         {
             
 
@@ -129,7 +133,7 @@ namespace Chess
 
             if (s == "r")
             {
-                chessGame.StartGame();
+                chessGame.StartGame(players.Item1, players.Item2);
                 throw new BoardException("You pressed the reset the game");
             }
 
@@ -154,13 +158,24 @@ namespace Chess
         public static void PrintCapturedPieces(ChessGame match)
         {
             Console.WriteLine("Captured Pieces:");
-            Console.Write("White: ");
-            PrintHashset(match.CapturedPieces(Color.White));
-            Console.WriteLine("");
-            Console.Write("Blue: ");
+           
+            Console.Write(match.player1.NamePlayer+$"({match.player1.ColorPleyer}): ");
             ConsoleColor aux = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Blue;
-            PrintHashset(match.CapturedPieces(Color.Blue));
+            if (match.player1.ColorPleyer.ToString() == "Blue")
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+            }
+
+            PrintHashset(match.CapturedPieces(match.player1.ColorPleyer));
+
+            Console.ForegroundColor = aux;
+            Console.WriteLine("");           
+            Console.Write(match.player2.NamePlayer + $"({match.player2.ColorPleyer}): ");
+            if (match.player2.ColorPleyer.ToString() == "Blue")
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+            }
+            PrintHashset(match.CapturedPieces(match.player2.ColorPleyer));
             Console.ForegroundColor = aux;
             Console.WriteLine("");
 

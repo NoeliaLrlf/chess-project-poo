@@ -32,7 +32,7 @@
             bool[,] mat = new bool[Board.Rows, Board.Columns];
             Position pos = new Position(0, 0);
 
-            if (Color == Color.White)
+            if (Color == Match.player1.ColorPleyer)
             {
                 pos.SetValues(Position.Row - 1, Position.Column);
                 if (Board.IsValidPosition(pos) && Free(pos))

@@ -13,6 +13,9 @@ namespace Chess
         public bool Finished { get; private set; }
         public bool Quit { get; set; }
 
+        public Player player1;
+        public Player player2;
+
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
 
@@ -21,11 +24,13 @@ namespace Chess
             
         }
 
-        public void StartGame()
+        public void StartGame(Player player1, Player player2)
         {
             BoardGame = new Board(8, 8);
             Turn = 1;
-            ColorGamePlayer = Color.White;
+            this.player1= player1;
+            this.player2 = player2;
+            ColorGamePlayer = player1.ColorPleyer;
             Finished = false;
             Quit = false;
             Check = false;
@@ -49,7 +54,7 @@ namespace Chess
             //#Special Play: Promotion
             if (p is Pawn)
             {
-                if (p.Color == Color.White && destination.Row == 0 || p.Color == Color.Black && destination.Row == 7)
+                if (p.Color == player1.ColorPleyer && destination.Row == 0 || p.Color == Color.Black && destination.Row == 7)
                 {
                     p = BoardGame.RemovePiece(destination);
                     Pieces.Remove(p);
@@ -134,13 +139,13 @@ namespace Chess
         }
         private void ChangePlayer()
         {
-            if (ColorGamePlayer == Color.White)
+            if (ColorGamePlayer == player1.ColorPleyer)
             {
-                ColorGamePlayer = Color.Blue;
+                ColorGamePlayer = player2.ColorPleyer;
             }
             else
             {
-                ColorGamePlayer = Color.White;
+                ColorGamePlayer = player1.ColorPleyer;
             }
         }
         public Piece RunMovement(Position origin, Position destination)
@@ -188,7 +193,7 @@ namespace Chess
                 if (origin.Column != destination.Column && CapturedPiece == null)
                 {
                     Position posP;
-                    if (P.Color == Color.White)
+                    if (P.Color == player1.ColorPleyer)
                     {
                         posP = new Position(destination.Row + 1, destination.Column);
                     }
@@ -247,7 +252,7 @@ namespace Chess
                 {
                     Piece pawn = BoardGame.RemovePiece(destination);
                     Position posP;
-                    if (P.Color == Color.White)
+                    if (P.Color == player1.ColorPleyer)
                     {
                         posP = new Position(3, destination.Column);
                     }
@@ -281,11 +286,11 @@ namespace Chess
         }
         private Color Opponent(Color color)
         {
-            if (color == Color.White)
+            if (color == player1.ColorPleyer)
             {
-                return Color.Blue;
+                return player2.ColorPleyer;
             }
-            return Color.White;
+            return player1.ColorPleyer;
         }
         public bool IsItChecked(Color color)
         {
@@ -343,39 +348,39 @@ namespace Chess
         }
         public void MountBoard()
         {
-            PutNewPiece('a', 1, new Rook(BoardGame, Color.White));
-            PutNewPiece('b', 1, new Horse(BoardGame, Color.White));
-            PutNewPiece('c', 1, new Bishop(BoardGame, Color.White));
-            PutNewPiece('d', 1, new Queen(BoardGame, Color.White));
-            PutNewPiece('e', 1, new King(BoardGame, Color.White, this));
-            PutNewPiece('f', 1, new Bishop(BoardGame, Color.White));
-            PutNewPiece('g', 1, new Horse(BoardGame, Color.White));
-            PutNewPiece('h', 1, new Rook(BoardGame, Color.White));
-            PutNewPiece('a', 2, new Pawn(BoardGame, Color.White, this));
-            PutNewPiece('b', 2, new Pawn(BoardGame, Color.White, this));
-            PutNewPiece('c', 2, new Pawn(BoardGame, Color.White, this));
-            PutNewPiece('d', 2, new Pawn(BoardGame, Color.White, this));
-            PutNewPiece('e', 2, new Pawn(BoardGame, Color.White, this));
-            PutNewPiece('f', 2, new Pawn(BoardGame, Color.White, this));
-            PutNewPiece('g', 2, new Pawn(BoardGame, Color.White, this));
-            PutNewPiece('h', 2, new Pawn(BoardGame, Color.White, this));
+            PutNewPiece('a', 1, new Rook(BoardGame, player1.ColorPleyer));
+            PutNewPiece('b', 1, new Horse(BoardGame, player1.ColorPleyer));
+            PutNewPiece('c', 1, new Bishop(BoardGame, player1.ColorPleyer));
+            PutNewPiece('d', 1, new Queen(BoardGame, player1.ColorPleyer));
+            PutNewPiece('e', 1, new King(BoardGame, player1.ColorPleyer, this));
+            PutNewPiece('f', 1, new Bishop(BoardGame, player1.ColorPleyer));
+            PutNewPiece('g', 1, new Horse(BoardGame, player1.ColorPleyer));
+            PutNewPiece('h', 1, new Rook(BoardGame, player1.ColorPleyer));
+            PutNewPiece('a', 2, new Pawn(BoardGame, player1.ColorPleyer, this));
+            PutNewPiece('b', 2, new Pawn(BoardGame, player1.ColorPleyer, this));
+            PutNewPiece('c', 2, new Pawn(BoardGame, player1.ColorPleyer, this));
+            PutNewPiece('d', 2, new Pawn(BoardGame, player1.ColorPleyer, this));
+            PutNewPiece('e', 2, new Pawn(BoardGame, player1.ColorPleyer, this));
+            PutNewPiece('f', 2, new Pawn(BoardGame, player1.ColorPleyer, this));
+            PutNewPiece('g', 2, new Pawn(BoardGame, player1.ColorPleyer, this));
+            PutNewPiece('h', 2, new Pawn(BoardGame, player1.ColorPleyer, this));
 
-            PutNewPiece('a', 8, new Rook(BoardGame, Color.Blue));
-            PutNewPiece('b', 8, new Horse(BoardGame, Color.Blue));
-            PutNewPiece('c', 8, new Bishop(BoardGame, Color.Blue));
-            PutNewPiece('d', 8, new Queen(BoardGame, Color.Blue));
-            PutNewPiece('e', 8, new King(BoardGame, Color.Blue, this));
-            PutNewPiece('f', 8, new Bishop(BoardGame, Color.Blue));
-            PutNewPiece('g', 8, new Horse(BoardGame, Color.Blue));
-            PutNewPiece('h', 8, new Rook(BoardGame, Color.Blue));
-            PutNewPiece('a', 7, new Pawn(BoardGame, Color.Blue, this));
-            PutNewPiece('b', 7, new Pawn(BoardGame, Color.Blue, this));
-            PutNewPiece('c', 7, new Pawn(BoardGame, Color.Blue, this));
-            PutNewPiece('d', 7, new Pawn(BoardGame, Color.Blue, this));
-            PutNewPiece('e', 7, new Pawn(BoardGame, Color.Blue, this));
-            PutNewPiece('f', 7, new Pawn(BoardGame, Color.Blue, this));
-            PutNewPiece('g', 7, new Pawn(BoardGame, Color.Blue, this));
-            PutNewPiece('h', 7, new Pawn(BoardGame, Color.Blue, this));
+            PutNewPiece('a', 8, new Rook(BoardGame, player2.ColorPleyer));
+            PutNewPiece('b', 8, new Horse(BoardGame, player2.ColorPleyer));
+            PutNewPiece('c', 8, new Bishop(BoardGame, player2.ColorPleyer));
+            PutNewPiece('d', 8, new Queen(BoardGame, player2.ColorPleyer));
+            PutNewPiece('e', 8, new King(BoardGame, player2.ColorPleyer, this));
+            PutNewPiece('f', 8, new Bishop(BoardGame, player2.ColorPleyer));
+            PutNewPiece('g', 8, new Horse(BoardGame, player2.ColorPleyer));
+            PutNewPiece('h', 8, new Rook(BoardGame, player2.ColorPleyer));
+            PutNewPiece('a', 7, new Pawn(BoardGame, player2.ColorPleyer, this));
+            PutNewPiece('b', 7, new Pawn(BoardGame, player2.ColorPleyer, this));
+            PutNewPiece('c', 7, new Pawn(BoardGame, player2.ColorPleyer, this));
+            PutNewPiece('d', 7, new Pawn(BoardGame, player2.ColorPleyer, this));
+            PutNewPiece('e', 7, new Pawn(BoardGame, player2.ColorPleyer, this));
+            PutNewPiece('f', 7, new Pawn(BoardGame, player2.ColorPleyer, this));
+            PutNewPiece('g', 7, new Pawn(BoardGame, player2.ColorPleyer, this));
+            PutNewPiece('h', 7, new Pawn(BoardGame, player2.ColorPleyer, this));
         }
     }
 }
