@@ -151,7 +151,7 @@ namespace Chess
         public Piece RunMovement(Position origin, Position destination)
         {
             Piece P = BoardGame.RemovePiece(origin);
-            P.IncreaseMovementsQty();
+            P.IncreaseMovementsY();
             Piece CapturedPiece = BoardGame.RemovePiece(destination);
             BoardGame.PutPiece(P, destination);
             if (CapturedPiece != null)
@@ -168,7 +168,7 @@ namespace Chess
                 Position originR = new Position(origin.Row, origin.Column + 3);
                 Position destinationR = new Position(origin.Row, origin.Column + 1);
                 Piece R = BoardGame.RemovePiece(originR);
-                R.IncreaseMovementsQty();
+                R.IncreaseMovementsY();
                 BoardGame.PutPiece(R, destinationR);
             }
 
@@ -181,7 +181,7 @@ namespace Chess
                 Position originR = new Position(origin.Row, origin.Column - 4);
                 Position destinationR = new Position(origin.Row, origin.Column - 1);
                 Piece R = BoardGame.RemovePiece(originR);
-                R.IncreaseMovementsQty();
+                R.IncreaseMovementsY();
                 BoardGame.PutPiece(R, destinationR);
             }
 
@@ -211,7 +211,7 @@ namespace Chess
         public void UndoMovement(Position origin, Position destination, Piece capturedPiece)
         {
             Piece P = BoardGame.RemovePiece(destination);
-            P.DecreaseMovementsQty();
+            P.DecreaseMovementsY();
             if (capturedPiece != null)
             {
                 BoardGame.PutPiece(capturedPiece, destination);
@@ -227,7 +227,7 @@ namespace Chess
                 Position originR = new Position(origin.Row, origin.Column + 3);
                 Position destinationR = new Position(origin.Row, origin.Column + 1);
                 Piece R = BoardGame.RemovePiece(destinationR);
-                R.DecreaseMovementsQty();
+                R.DecreaseMovementsY();
                 BoardGame.PutPiece(R, originR);
             }
 
@@ -239,7 +239,7 @@ namespace Chess
                 Position originR = new Position(origin.Row, origin.Column - 4);
                 Position destinationR = new Position(origin.Row, origin.Column - 1);
                 Piece R = BoardGame.RemovePiece(destinationR);
-                R.DecreaseMovementsQty();
+                R.DecreaseMovementsY();
                 BoardGame.PutPiece(R, originR);
             }
 
@@ -322,7 +322,7 @@ namespace Chess
                 throw new BoardException("The chosen piece is not yours!");
             }
 
-            if (!BoardGame.Piece(pos).IsTherePossibleMovements())
+            if (!BoardGame.Piece(pos).CanMove())
             {
                 throw new BoardException("There is no possible movements for the chosen piece!");
             }

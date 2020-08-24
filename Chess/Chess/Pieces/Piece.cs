@@ -17,17 +17,17 @@
 
         public abstract bool[,] PossibleMovements();
 
-        public void IncreaseMovementsQty()
+        public void IncreaseMovementsY()
         {
             MovementsY++;
         }
 
-        public void DecreaseMovementsQty()
+        public void DecreaseMovementsY()
         {
             MovementsY--;
         }
 
-        public bool IsTherePossibleMovements()
+        public bool CanMove()
         {
             bool[,] mat = PossibleMovements();
             for (int i = 0; i < Board.Rows; i++)
