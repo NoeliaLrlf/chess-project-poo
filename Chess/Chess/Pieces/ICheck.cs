@@ -2,5 +2,6 @@
 {
     internal interface ICheck
     {
+        public void CheckKing();
     }
 }

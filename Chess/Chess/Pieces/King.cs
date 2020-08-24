@@ -1,6 +1,6 @@
 ﻿namespace Chess.Pieces
 {
-    internal class King : Piece, ICastling
+    internal class King : Piece, ICastling , ICheck
     {
         private ChessGame chessGame;
 
@@ -120,6 +120,11 @@
         public override string ToString()
         {
             return "K";
+        }
+
+        public void CheckKing()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

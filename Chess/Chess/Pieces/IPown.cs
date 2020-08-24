@@ -1,6 +1,7 @@
 ﻿namespace Chess.Pieces
 {
-    internal interface IPown
+    public interface IPown
     {
+        public void Passant(bool[,] mat);
     }
 }
