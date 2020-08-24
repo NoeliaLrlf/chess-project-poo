@@ -138,7 +138,7 @@ namespace Chess
                             break;
                         }
 
-                        Position origin = PrintBoard.ReadChessPosition(s, chessGame, players).ToPosition();
+                        Position origin = PrintBoard.ReadChessPosition(s, chessGame, players).IniPosition();
                         chessGame.ValidateOriginPosition(origin);
 
                         bool[,] possiblePositions = chessGame.BoardGame.Piece(origin).PossibleMovements();
@@ -154,10 +154,10 @@ namespace Chess
                             Action = "Reset Game";
                             break;
                         }
-                        Position destination = PrintBoard.ReadChessPosition(s, chessGame, players).ToPosition();
+                        Position destination = PrintBoard.ReadChessPosition(s, chessGame, players).IniPosition();
                         chessGame.ValidadeDestinationPosition(origin, destination);
 
-                        chessGame.MakeThePlay(origin, destination);
+                        chessGame.InitPlay(origin, destination);
 
                     }
 

@@ -11,7 +11,7 @@
             Row = row;
         }
 
-        public Position ToPosition()
+        public Position IniPosition()
         {
             return new Position(8 - Row, Column - 'a');
         }

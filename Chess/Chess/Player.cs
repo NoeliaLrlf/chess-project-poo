@@ -11,7 +11,7 @@ namespace Chess
         private Color color;
 
         public string NamePlayer { get => name; set => name = value; }
-        public Color ColorPleyer { get => color; set => color = value; }
+        public Color ColorPlayer { get => color; set => color = value; }
         public Player(string name, Color color) {
             this.name = name;
             this.color = color;

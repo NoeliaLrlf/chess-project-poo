@@ -24,7 +24,7 @@ namespace Chess
             return Pieces[pos.Row, pos.Column];
         }
 
-        public void PutPiece(Piece p, Position pos)
+        public void FillPiece(Piece p, Position pos)
         {
             Pieces[pos.Row, pos.Column] = p;
             p.Position = pos;
